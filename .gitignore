@@ -79,6 +79,7 @@ vignettes/*.pdf
 # Shiny token, see https://shiny.rstudio.com/articles/shinyapps.html
 rsconnect/
 
-#### Clion ignore ####
+#### Clion and VS code ignore ####
 
+code_cpp/.vscode/
 .idea/

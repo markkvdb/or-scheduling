@@ -23,15 +23,20 @@ class Experiment
    IloNumArray             d_surgeryAssignments;
    IloNum                  d_lambda;
 
+   // Multiple Replication Procedure
+   IloNum d_optGapMean;
+   IloNum d_optGapVar;
+   IloInt d_optGapReps;
+   IloInt d_optGapSamples;
+
    // Models
    SAAMethod   d_SAAMethod;
    IloNum      d_SAARunTime;
 
 public:
    Experiment() = delete;
-   Experiment(ModelParameters params, IloInt runs);
+   Experiment(ModelParameters params, IloInt runs, IloInt optGapReps, IloInt optGapSamples);
 
-   void initialise();
    void solve();
    void output();
    void showSolution();

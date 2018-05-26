@@ -29,6 +29,7 @@ Function to output all the relevant data of the experiment. Data is:
 void Experiment::output()
 {
 	d_SAAMethod.showSolution();
+	
 	// Define output stream
 	ofstream outputFile;
 	outputFile.open(string("experiment output/experiment") + to_string(d_id));

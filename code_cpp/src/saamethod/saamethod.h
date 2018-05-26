@@ -14,8 +14,9 @@ typedef IloArray<IloNumVarMatrix> IloNumVarMatrix3;
 
 class SAAMethod
 {
-   IloEnv         d_env;
-   IloInt         d_iter;
+   IloEnv   d_env;
+   IloInt   d_iter;
+   IloBool  d_integer;
    
    // Define master problem
    MasterProblem              d_masterProblem;
@@ -40,7 +41,7 @@ class SAAMethod
 
 public:
    SAAMethod() = delete;
-   SAAMethod(IloEnv env, ModelParameters params);
+   SAAMethod(IloEnv env, ModelParameters params, IloBool integer);
 
    void  initialise(IloBool bender);
    void  solve();

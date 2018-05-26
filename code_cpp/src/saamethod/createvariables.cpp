@@ -22,7 +22,10 @@ void SAAMethod::createVariables()
 
 	for (IloInt scen = 0; scen < d_params.nbScenarios; ++scen)
 	{
-		d_o[scen] = IloNumVarArray(d_env, nbORs, 0, IloInfinity);
+		if (d_integer)
+			d_o[scen] = IloNumVarArray(d_env, nbORs, 0, IloInfinity, ILOINT);
+		else
+			d_o[scen] = IloNumVarArray(d_env, nbORs, 0, IloInfinity);
 
 		// Set names
 		std::ostringstream oss;

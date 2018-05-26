@@ -6,5 +6,6 @@
 #include <fstream>
 #include <sstream>
 #include <chrono>
+#include <array>
 
 ILOSTLBEGIN

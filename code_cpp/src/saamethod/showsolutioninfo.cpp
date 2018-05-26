@@ -11,8 +11,6 @@ string SAAMethod::showSolutionInfo()
 	string outputLine;
 	ostringstream oss;
 
-	IloBool integerModel = IloFalse;
-
 	// Assign all values
 	/*
  	- ORs open
@@ -56,10 +54,8 @@ string SAAMethod::showSolutionInfo()
 	oss << IloSum(xVals) << ' ';
 
 	// Second-stage costs can be found by solving the real MILP for many scenarios, e.g,
-	RecourseModel recourseCosts(d_env, d_params, integerModel, 10);
-	recourseCosts.initialise(xVals, yVals, lVal);
+	RecourseModel recourseCosts(d_env, d_params, IloTrue, 1000, xVals, yVals, lVal);
 	recourseCosts.solve();
-	recourseCosts.showMinMaxDuals();
 	IloNum secondStageCosts = recourseCosts.getObjVal();
 	oss << secondStageCosts << ' ';
 
