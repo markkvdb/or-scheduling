@@ -1,0 +1,17 @@
+---
+title: "Figures OR Scheduling"
+author: "Mark van der Broek"
+date: "25/04/2018"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+source("createResults.R")
+```
+
+## Figures
+```{r}
+create_figures(experimentData)
+```
