@@ -6,6 +6,8 @@
 
 void Experiment::solve()
 {
+	cout << endl << "Solve the problem using the SAA method" << endl;
+
 	auto start = chrono::steady_clock::now();
 	d_SAAMethod.solve();
 	auto end = chrono::steady_clock::now();

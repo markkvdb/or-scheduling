@@ -8,6 +8,8 @@
 
 void SAAMethod::initialise(IloBool bender)
 {
+	cout << endl << "Initialise the SAA method" << endl;
+
 	// Initialise model
 	d_masterProblem.initalise();
 

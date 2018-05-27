@@ -48,12 +48,15 @@ void Experiment::output()
 	string solutionData = d_SAAMethod.showSolutionInfo();
 	outputFile << solutionData << ' ';
 
-	outputFile << d_SAARunTime;
+	outputFile << d_SAARunTime << ' ';
 
 	// MRP data
 	optimalityGap();
-	outputFile << d_optGapMean << ' ' << d_optGapVar << ' ' << d_optGapReps;
+	outputFile << d_optGapMean << ' ' << d_optGapVar << ' ' << d_optGapReps << ' ';
 
-	outputFile << '\n';
+	// Worst-case distribution
+	worstDistribution(d_SAAMethod.getDurationSample());
+
+	outputFile << endl;
 	outputFile.close();
 }

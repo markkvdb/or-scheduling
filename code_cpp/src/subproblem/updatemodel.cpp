@@ -9,7 +9,10 @@ void SubProblem::updateModel(IloNumArray xVals, IloNumArray2 yVals, IloNum lVal)
 	// Update the overtime constraints
 	for (IloInt OR = 0; OR < d_params.nbORs; ++OR)
 	{
-		d_overtimeConstraints[OR].setUB(60 * d_params.nbHours * xVals[OR] - IloScalProd(d_durations, yVals[OR]) - 30);
+		if (d_integer)
+			d_overtimeConstraints[OR].setUB(60 * d_params.nbHours * xVals[OR] - IloScalProd(d_durations, yVals[OR]));
+		else
+			d_overtimeConstraints[OR].setUB(60 * d_params.nbHours * xVals[OR] - IloScalProd(d_durations, yVals[OR]) - 30);
 	}
 
 	// Change minimax constraint

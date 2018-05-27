@@ -24,7 +24,7 @@ void SAAMethod::createVariables()
 	{
 		if (d_integer)
 			d_o[scen] = IloNumVarArray(d_env, nbORs, 0, IloInfinity, ILOINT);
-		else
+		else 
 			d_o[scen] = IloNumVarArray(d_env, nbORs, 0, IloInfinity);
 
 		// Set names

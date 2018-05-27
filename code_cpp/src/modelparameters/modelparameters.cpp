@@ -7,7 +7,7 @@
 ModelParameters::ModelParameters()
 {
 	// Parameters for the problem
-	nbORs 			= 10;
+	nbORs 			= 5;
 	nbSurgeries 	= nbORs;
 
 	// Costs

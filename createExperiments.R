@@ -18,7 +18,7 @@ experimentTable = experimentTable[-1,]
 
 #### Base experiment ####
 baseExperiment = tibble(
-  nbORs 			  = 10,
+  nbORs 			  = 5,
   nbSurgeries   = nbORs,
   cf 				    = 1,
   cv 				    = 0.13,

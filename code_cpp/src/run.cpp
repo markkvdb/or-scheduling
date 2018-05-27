@@ -13,9 +13,9 @@ int main(int argc, char **argv)
 		experiments.solve();
 	}
 	catch (IloException& e) {
-   		cerr<< "Concert exception caught: " << e << '\n';
+   		cerr<< "Concert exception caught: " << e << endl;
 	}
-	catch (...) {
-   		cerr << "Unknown exception caught" << '\n';
+	catch (string const &e) {
+   		cerr << e << endl;
 	}
 }

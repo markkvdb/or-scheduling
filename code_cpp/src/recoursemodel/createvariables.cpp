@@ -8,13 +8,9 @@ void RecourseModel::createVariables()
 	for (IloInt scen = 0; scen < d_params.nbScenarios; ++scen)
 	{
 		if (d_integer)
-		{
 			d_o[scen] = IloNumVarArray(d_env, nbORs, 0, IloInfinity, ILOINT);
-		}
 		else 
-		{
 			d_o[scen] = IloNumVarArray(d_env, nbORs, 0, IloInfinity);
-		}
 
 		// Set names
 		std::ostringstream oss;

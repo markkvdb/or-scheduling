@@ -5,6 +5,7 @@
 #include "../modelparameters/modelparameters.h"
 #include "../saamethod/saamethod.h"
 #include "../recoursemodel/recoursemodel.h"
+#include "../subproblem/subproblem.h"
 
 typedef IloArray<IloNumVarArray> IloNumVarMatrix;
 typedef IloArray<IloNumVarMatrix> IloNumVarMatrix3;
@@ -45,7 +46,7 @@ private:
    IloNum   firstStageCost();
    IloNum   secondStageCost();
    void     optimalityGap();
-   void     worstDistribution();
+   void     worstDistribution(IloNumArray2 durationSample);
 
    std::string createExperimentHeader();
 };

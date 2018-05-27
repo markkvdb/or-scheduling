@@ -6,7 +6,10 @@ void SubProblem::createConstraints()
 	d_overtimeConstraints = IloRangeArray{d_env, d_params.nbORs};
 	for (IloInt OR = 0; OR < d_params.nbORs; ++OR)
 	{
-		d_overtimeConstraints[OR] = IloRange{d_env, -60 * d_o[OR], -30};
+		if (d_integer)
+			d_overtimeConstraints[OR] = IloRange{d_env, -60 * d_o[OR], 0};
+		else
+			d_overtimeConstraints[OR] = IloRange{d_env, -60 * d_o[OR], -30};
 		d_model.add(d_overtimeConstraints[OR]);
 	}
 	// Add minmax constraint.

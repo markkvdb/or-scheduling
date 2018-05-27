@@ -34,10 +34,10 @@ string Experiment::createExperimentHeader()
 	oss << "FSC SSC iterations ";
 
 	// Time data
-	oss << "runTimeSaa";
+	oss << "runTimeSaa ";
 
 	// MRP data
-	oss << "optGapMean optGapVar optGapReps";
+	oss << "optGapMean optGapVar optGapReps ";
 
 	return oss.str();
 }

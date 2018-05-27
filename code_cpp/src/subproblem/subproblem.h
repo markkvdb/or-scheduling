@@ -10,6 +10,8 @@ class SubProblem
 	IloModel	d_model;
 	IloCplex 	d_cplex;
 
+	IloBool d_integer;
+
 	// Variables of the model
 	IloNumVarArray	d_o;
 	IloNumVar 		d_uPlus;
@@ -35,8 +37,8 @@ class SubProblem
 
 public:
 	SubProblem();
-	SubProblem(IloEnv env, IloNumArray durations, ModelParameters params);
-	SubProblem(IloEnv env, IloNumArray durations, ModelParameters params, 
+	SubProblem(IloEnv env, IloNumArray durations, ModelParameters params, IloBool integer);
+	SubProblem(IloEnv env, IloNumArray durations, ModelParameters params, IloBool integer, 
 			   IloNumArray xVals, IloNumArray2 yVals, IloNum lVal);
 
 	void 		initialise();

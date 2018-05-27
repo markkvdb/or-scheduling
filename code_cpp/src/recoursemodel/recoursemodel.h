@@ -49,6 +49,7 @@ public:
    void  showSample();
    void  showResults();
    void  showMinMaxDuals();
+   void  exportModel();
 
    IloNumArray2   getSample();
    IloNum         getObjVal();
@@ -79,6 +80,11 @@ inline void RecourseModel::solve()
 inline IloNum RecourseModel::getObjVal()
 {
    return d_cplex.getObjValue();
+}
+
+inline void RecourseModel::exportModel()
+{
+    d_cplex.exportModel("recourse_model.lp");
 }
 
 #endif

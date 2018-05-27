@@ -22,14 +22,17 @@ void Experiment::optimalityGap()
         paramsRep.seed = seed;
         paramsRep.nbScenarios = d_optGapSamples;
 
-		// 1. Solve the MILP for sample size nbSamples (actual solve)
-        SAAMethod milpModel{d_env, paramsRep, IloTrue};
-        milpModel.solve();
-        IloNum optimalMILP = milpModel.getObjectiveVal();
-
 		// 2. Evaluate the recourse cost for the second-stage MILP
         RecourseModel recourseModel{d_env, paramsRep, IloTrue, d_optGapSamples, xVals, yVals, lVal};
+        recourseModel.solve();
+        recourseModel.exportModel();
         IloNum actualMILP = IloSum(xVals) + recourseModel.getObjVal();
+
+        // 1. Solve the MILP for sample size nbSamples (actual solve)
+        SAAMethod milpModel{d_env, paramsRep, IloFalse};
+        milpModel.exportModel();
+        milpModel.solve();
+        IloNum optimalMILP = milpModel.getObjectiveVal();
 
 		// 3. Calculate the gap
         gapEstimates.push_back(optimalMILP - actualMILP);

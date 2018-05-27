@@ -54,11 +54,13 @@ public:
    void     solve();
    void     showSolution();
    void     showSample();
+   void     exportModel();
 
    IloNum         getObjectiveVal();
    IloNumArray    getXVals();
    IloNumArray2   getYVals();
    IloNum         getLVal();
+   IloNumArray2   getDurationSample();
 
    std::string showSolutionInfo();
 
@@ -79,6 +81,11 @@ inline void SAAMethod::showSample()
       d_env.out() << "Scenario " << scen << " = " << d_durationSample[scen] << '\n';
 }
 
+inline IloNumArray2 SAAMethod::getDurationSample()
+{
+      return d_durationSample;
+}
+
 inline IloNum SAAMethod::getObjectiveVal()
 {
       return d_cplex.getObjValue();
@@ -97,6 +104,11 @@ inline IloNumArray2 SAAMethod::getYVals()
 inline IloNum SAAMethod::getLVal()
 {
       return d_lVal;
+}
+
+inline void SAAMethod::exportModel()
+{
+    d_cplex.exportModel("saa_model.lp");
 }
 
 #endif
