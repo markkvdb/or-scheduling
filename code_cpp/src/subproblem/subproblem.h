@@ -36,6 +36,8 @@ class SubProblem
 public:
 	SubProblem();
 	SubProblem(IloEnv env, IloNumArray durations, ModelParameters params);
+	SubProblem(IloEnv env, IloNumArray durations, ModelParameters params, 
+			   IloNumArray xVals, IloNumArray2 yVals, IloNum lVal);
 
 	void 		initialise();
 	void 		solve();

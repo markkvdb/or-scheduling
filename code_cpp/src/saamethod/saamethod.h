@@ -32,6 +32,13 @@ class SAAMethod
    IloNumVarArray    d_uPlus;
    IloNumVarArray    d_uMinus;
 
+   IloNumArray    d_xVals;
+   IloNumArray2   d_yVals;
+   IloNum         d_lVal;
+   IloNumArray2   d_oVals;
+   IloNumArray    d_uPlusVals;
+   IloNumArray    d_uMinusVals;
+
    // Parameters of the algorithm
    ModelParameters const   d_params;
 
@@ -43,10 +50,15 @@ public:
    SAAMethod() = delete;
    SAAMethod(IloEnv env, ModelParameters params, IloBool integer);
 
-   void  initialise(IloBool bender);
-   void  solve();
-   void  showSolution();
-   void  showSample();
+   void     initialise(IloBool bender);
+   void     solve();
+   void     showSolution();
+   void     showSample();
+
+   IloNum         getObjectiveVal();
+   IloNumArray    getXVals();
+   IloNumArray2   getYVals();
+   IloNum         getLVal();
 
    std::string showSolutionInfo();
 
@@ -57,12 +69,34 @@ private:
    void  createObjective();
    void  createBenderVars();
    void  createVarOrdering();
+
+   void  updateVals();
 };
 
 inline void SAAMethod::showSample()
 {
    for (IloInt scen = 0; scen < d_params.nbScenarios; ++scen)
       d_env.out() << "Scenario " << scen << " = " << d_durationSample[scen] << '\n';
+}
+
+inline IloNum SAAMethod::getObjectiveVal()
+{
+      return d_cplex.getObjValue();
+}
+
+inline IloNumArray SAAMethod::getXVals()
+{
+      return d_xVals;
+}
+
+inline IloNumArray2 SAAMethod::getYVals()
+{
+      return d_yVals;
+}
+
+inline IloNum SAAMethod::getLVal()
+{
+      return d_lVal;
 }
 
 #endif

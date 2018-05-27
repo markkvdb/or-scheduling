@@ -36,5 +36,8 @@ string Experiment::createExperimentHeader()
 	// Time data
 	oss << "runTimeSaa";
 
+	// MRP data
+	oss << "optGapMean optGapVar optGapReps";
+
 	return oss.str();
 }

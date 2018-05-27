@@ -51,10 +51,8 @@ void Experiment::output()
 	outputFile << d_SAARunTime;
 
 	// MRP data
-	// if (MRP)
-	// {
-
-	// }
+	optimalityGap();
+	outputFile << d_optGapMean << ' ' << d_optGapVar << ' ' << d_optGapReps;
 
 	outputFile << '\n';
 	outputFile.close();

@@ -42,12 +42,12 @@ public:
    void showSolution();
 
 private:
-   IloNum firstStageCost();
-   IloNum secondStageCost();
-   IloNum optimalityGap(IloNum alpha, IloInt nbSamples, IloInt nbReps);
+   IloNum   firstStageCost();
+   IloNum   secondStageCost();
+   void     optimalityGap();
+   void     worstDistribution();
 
    std::string createExperimentHeader();
-
 };
 
 #endif

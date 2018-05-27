@@ -40,6 +40,8 @@ class RecourseModel
 public:
    RecourseModel() = delete;
    RecourseModel(IloEnv env, ModelParameters params, IloBool integer, IloInt sampleSize);
+   RecourseModel(IloEnv env, ModelParameters params, IloBool integer, IloInt sampleSize,
+		     IloNumArray xVals, IloNumArray2 yVals, IloNum lVal);
 
    void  initialise(IloNumArray xVals, IloNumArray2 yVals, IloNum lVal);
    void  solve();

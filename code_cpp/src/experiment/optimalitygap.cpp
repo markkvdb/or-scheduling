@@ -3,25 +3,24 @@
 /* 
  * Calculate the optimality gap by means of the Multiple 
  * Replication Procedure. 
- * 
- * TODO Save as data member: mean, standard deviation and number of reps
  */
 
-void Experiment::optimalityGap(IloNum alpha, IloInt nbSamples, IloInt nbReps)
+void Experiment::optimalityGap()
 {
-	array<IloNum, nbReps> gapEstimates{};
+	vector<IloNum> gapEstimates{};
 	IloInt seed = 2513102;
 
 	// Obtain the first-stage solution
-    xVals;
-    yVals;
-    lVal;
+    IloNumArray xVals = d_SAAMethod.getXVals();
+    IloNumArray2 yVals = d_SAAMethod.getYVals();
+    IloNum lVal = d_SAAMethod.getLVal();
 
-	for (IloInt rep = 0; rep < nbReps; ++rep)
+	for (IloInt rep = 0; rep < d_optGapReps; ++rep)
 	{
         // Define model parameters using new seed
         ModelParameters paramsRep = d_params;
         paramsRep.seed = seed;
+        paramsRep.nbScenarios = d_optGapSamples;
 
 		// 1. Solve the MILP for sample size nbSamples (actual solve)
         SAAMethod milpModel{d_env, paramsRep, IloTrue};
@@ -29,20 +28,20 @@ void Experiment::optimalityGap(IloNum alpha, IloInt nbSamples, IloInt nbReps)
         IloNum optimalMILP = milpModel.getObjectiveVal();
 
 		// 2. Evaluate the recourse cost for the second-stage MILP
-        RecourseModel recourseModel{d_env, paramsRep, IloTrue, nbSamples, xVals, yVals, lVal};
+        RecourseModel recourseModel{d_env, paramsRep, IloTrue, d_optGapSamples, xVals, yVals, lVal};
         IloNum actualMILP = IloSum(xVals) + recourseModel.getObjVal();
 
 		// 3. Calculate the gap
-        gapEstimates[rep] = optimalMILP - actualMILP;
+        gapEstimates.push_back(optimalMILP - actualMILP);
 
-        ++seedBase;
+        ++seed;
 	}
 
 	// Get mean and standard deviation of gap estimates
 	d_optGapMean = accumulate(gapEstimates.begin(), gapEstimates.end(), 0.0)/gapEstimates.size(); 
 	IloNum accum = 0.0;
 	for_each(begin(gapEstimates), end(gapEstimates), [&](IloNum const d) {
-    	accum += (d - meanGap) * (d - meanGap);
+    	accum += (d - d_optGapMean) * (d - d_optGapMean);
     });
 	d_optGapVar = accum / (gapEstimates.size()-1);
 }
