@@ -36,6 +36,28 @@ void SAAMethod::showSolution()
 		}
 		d_env.out() << '\n';
 	}
-	d_env.out() << d_cplex.getValue(d_l) << '\n';
+
+	// Show lambdas
+	IloNumArray lambdaVals{d_env};
+	d_cplex.getValues(d_lambdaVals, d_lambdas);
+
+	// First constraint
+	d_env.out() << "lambda (0) = ";
+	for (IloInt surgery = 0; surgery != d_params.nbSurgeries; ++surgery)
+		d_env.out() << lambdaVals[surgery] << ' ';
+	d_env.out() << '\n';
+
+	// Second constraint
+	d_env.out() << "lambda (1) = ";
+	for (IloInt surgery = 0; surgery != d_params.nbSurgeries; ++surgery)
+		d_env.out() << lambdaVals[d_params.nbSurgeries + surgery] << ' ';
+	d_env.out() << '\n';
+
+		// First constraint
+	d_env.out() << "lambda (2) = ";
+	for (IloInt surgery = 0; surgery != d_params.nbSurgeries; ++surgery)
+		d_env.out() << lambdaVals[2 * d_params.nbSurgeries + surgery] << ' ';
+	d_env.out() << '\n';
+
     d_env.out() << "---- END MASTER INFORMATION ----\n\n";
 }

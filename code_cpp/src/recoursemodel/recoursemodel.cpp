@@ -9,10 +9,7 @@ RecourseModel::RecourseModel(IloEnv env, ModelParameters params, IloBool integer
 	d_integer(integer)
 {
 	d_cplex.setParam(IloCplex::RootAlg, IloCplex::Dual);
-	// d_cplex.setParam(IloCplex::Param::Preprocessing::Presolve, IloFalse);
-	// d_cplex.setParam(IloCplex::Param::Preprocessing::Reduce, 0);
- //   	d_cplex.setParam(IloCplex::Param::RootAlgorithm, IloCplex::Primal);
-   	d_cplex.setParam(IloCplex::Param::TimeLimit, 60.0);
+
    	d_params.nbScenarios = sampleSize;
 
    	// Initialise variables
@@ -31,7 +28,7 @@ RecourseModel::RecourseModel(IloEnv env, ModelParameters params, IloBool integer
 }
 
 RecourseModel::RecourseModel(IloEnv env, ModelParameters params, IloBool integer, IloInt sampleSize,
-							 IloNumArray xVals, IloNumArray2 yVals, IloNum lVal)
+							 IloNumArray xVals, IloNumArray2 yVals, IloNumArray lambdaVals)
 :
 	d_env(env),
 	d_model(IloModel(env)),
@@ -40,10 +37,7 @@ RecourseModel::RecourseModel(IloEnv env, ModelParameters params, IloBool integer
 	d_integer(integer)
 {
 	d_cplex.setParam(IloCplex::RootAlg, IloCplex::Dual);
-	// d_cplex.setParam(IloCplex::Param::Preprocessing::Presolve, IloFalse);
-	// d_cplex.setParam(IloCplex::Param::Preprocessing::Reduce, 0);
- //   	d_cplex.setParam(IloCplex::Param::RootAlgorithm, IloCplex::Primal);
-   	d_cplex.setParam(IloCplex::Param::TimeLimit, 60.0);
+	
    	d_params.nbScenarios = sampleSize;
 
    	// Initialise variables
@@ -61,5 +55,5 @@ RecourseModel::RecourseModel(IloEnv env, ModelParameters params, IloBool integer
 	d_minmaxConstraints = IloRangeArray{d_env, d_params.nbScenarios};
 
 	// Initialise everything 
-	initialise(xVals, yVals, lVal);
+	initialise(xVals, yVals, lambdaVals);
 }

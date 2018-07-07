@@ -19,14 +19,14 @@ class MasterProblem
    // Variables
    IloNumVarArray    d_x;
    IloNumVarMatrix   d_y;
-   IloNumVar         d_l;
+   IloNumVarArray    d_lambdas;
    IloNumVar         d_eta;
    IloNumVarArray    d_allX;
 
    // Values
    IloNumArray       d_xVals;
    IloNumArray2      d_yVals;
-   IloNum            d_lVal;
+   IloNumArray       d_lambdaVals;
    IloNum            d_etaVal;
    IloNumArray       d_allXVals;
 
@@ -41,8 +41,6 @@ public:
    void initalise();
    void solve();
    void showSolution();
-   void setVariablesBinary();       // TODO
-   void setVariablesContinuous();   // TODO
    void addCutConstraint(IloNum QApprox, IloNumArray u);
    void setEta(IloNum low);
    void exportModel(std::string fileName);
@@ -51,10 +49,10 @@ public:
    IloModel          getModel();
    IloNumVarArray    getX();
    IloNumVarMatrix   getY();
-   IloNumVar         getL();
+   IloNumVarArray    getL();
    IloNumArray       getXVals();
    IloNumArray2      getYVals();
-   IloNum            getLVal();
+   IloNumArray       getLVals();
    IloNum            getEtaVal();
    IloObjective      getObjective();
    IloNum            getObjectiveVal();
@@ -80,9 +78,9 @@ inline IloNumVarMatrix MasterProblem::getY()
    return d_y;
 }
 
-inline IloNumVar MasterProblem::getL()
+inline IloNumVarArray MasterProblem::getL()
 {
-   return d_l;
+   return d_lambdas;
 }
 
 inline IloNumArray MasterProblem::getXVals()
@@ -95,9 +93,9 @@ inline IloNumArray2 MasterProblem::getYVals()
    return d_yVals;
 }
 
-inline IloNum MasterProblem::getLVal()
+inline IloNumArray MasterProblem::getLVals()
 {
-   return d_lVal;
+   return d_lambdaVals;
 }
 
 inline IloNum MasterProblem::getEtaVal()
@@ -124,17 +122,5 @@ inline IloNumArray MasterProblem::getAllVariableVals()
 {
    return d_allXVals;
 }
-
-// Not sure what to do with this
-inline void MasterProblem::setVariablesBinary()
-{
-
-}
-
-inline void MasterProblem::setVariablesContinuous()
-{
-   
-}
-
 
 #endif

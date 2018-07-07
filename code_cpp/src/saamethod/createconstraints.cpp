@@ -10,6 +10,7 @@
 
 void SAAMethod::createConstraints()
 {
+    IloArray<IloExpr> lambdaExprs = createLambdaConstraint();
     for (IloInt scen = 0; scen < d_params.nbScenarios; ++scen)
     {
         // Add constraints related to the minimum overtime
@@ -20,6 +21,6 @@ void SAAMethod::createConstraints()
             else 
                 d_completeModel.add(60 * d_o[scen][OR] >= IloScalProd(d_durationSample[scen], d_y[OR]) - (60 * d_params.nbHours * d_x[OR]) + 30);
         }
-        d_completeModel.add(d_uPlus[scen] - d_uMinus[scen] == d_params.cf * IloSum(d_x) + d_params.cv * IloSum(d_o[scen]) - d_l);
+        d_completeModel.add(d_uPlus[scen] - d_uMinus[scen] == d_params.cf * IloSum(d_x) + d_params.cv * IloSum(d_o[scen]) - lambdaExprs[scen]);
     }
 }

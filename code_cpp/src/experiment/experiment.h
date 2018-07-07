@@ -7,6 +7,8 @@
 #include "../recoursemodel/recoursemodel.h"
 #include "../subproblem/subproblem.h"
 
+#include <string>
+
 typedef IloArray<IloNumVarArray> IloNumVarMatrix;
 typedef IloArray<IloNumVarMatrix> IloNumVarMatrix3;
 
@@ -47,6 +49,7 @@ private:
    IloNum   secondStageCost();
    void     optimalityGap();
    void     worstDistribution(IloNumArray2 durationSample);
+   void     worstDistributionLP(IloNumArray objs, std::string const &name);
 
    std::string createExperimentHeader();
 };

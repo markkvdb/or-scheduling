@@ -35,15 +35,15 @@ class RecourseModel
    
    IloNumArray    d_xVals;
    IloNumArray2   d_yVals;
-   IloNum         d_lVal;
+   IloNumArray    d_lambdaVals;
 
 public:
    RecourseModel() = delete;
    RecourseModel(IloEnv env, ModelParameters params, IloBool integer, IloInt sampleSize);
    RecourseModel(IloEnv env, ModelParameters params, IloBool integer, IloInt sampleSize,
-		     IloNumArray xVals, IloNumArray2 yVals, IloNum lVal);
+		     IloNumArray xVals, IloNumArray2 yVals, IloNumArray lambdaVals);
 
-   void  initialise(IloNumArray xVals, IloNumArray2 yVals, IloNum lVal);
+   void  initialise(IloNumArray xVals, IloNumArray2 yVals, IloNumArray lambdaVals);
    void  solve();
    void  showSolution();
    void  showSample();
@@ -51,14 +51,15 @@ public:
    void  showMinMaxDuals();
    void  exportModel();
 
-   IloNumArray2   getSample();
-   IloNum         getObjVal();
+   IloNumArray2 getSample();
+   IloNum       getObjVal();
 
 private:
-   void  createDurationSample();
-   void  createVariables();
-   void  createConstraints();
-   void  createObjective();
+   void         createDurationSample();
+   void         createVariables();
+   void         createConstraints();
+   void         createObjective();
+   IloNumArray  createLambdaConstraint(); 
 };
 
 inline IloNumArray2 RecourseModel::getSample()

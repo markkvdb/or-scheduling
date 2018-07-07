@@ -1,10 +1,10 @@
 #include "recoursemodel.ih"
 
-void RecourseModel::initialise(IloNumArray xVals, IloNumArray2 yVals, IloNum lVal)
+void RecourseModel::initialise(IloNumArray xVals, IloNumArray2 yVals, IloNumArray lambdaVals)
 {
 	d_xVals = xVals;
 	d_yVals = yVals;
-	d_lVal = lVal;
+	d_lambdaVals = lambdaVals;
 	
 	// Create duration sample
 	createDurationSample();

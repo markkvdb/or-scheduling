@@ -18,7 +18,7 @@ void SAAMethod::createVariables()
 	// Load first-stage variables
 	d_x = d_masterProblem.getX();
 	d_y = d_masterProblem.getY();
-	d_l = d_masterProblem.getL(); 
+	d_lambdas = d_masterProblem.getL(); 
 
 	for (IloInt scen = 0; scen < d_params.nbScenarios; ++scen)
 	{

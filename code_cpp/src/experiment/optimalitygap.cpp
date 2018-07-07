@@ -13,7 +13,7 @@ void Experiment::optimalityGap()
 	// Obtain the first-stage solution
     IloNumArray xVals = d_SAAMethod.getXVals();
     IloNumArray2 yVals = d_SAAMethod.getYVals();
-    IloNum lVal = d_SAAMethod.getLVal();
+    IloNumArray lambdaVals = d_SAAMethod.getLVals();
 
 	for (IloInt rep = 0; rep < d_optGapReps; ++rep)
 	{
@@ -23,7 +23,7 @@ void Experiment::optimalityGap()
         paramsRep.nbScenarios = d_optGapSamples;
 
 		// 2. Evaluate the recourse cost for the second-stage MILP
-        RecourseModel recourseModel{d_env, paramsRep, IloTrue, d_optGapSamples, xVals, yVals, lVal};
+        RecourseModel recourseModel{d_env, paramsRep, IloTrue, d_optGapSamples, xVals, yVals, lambdaVals};
         recourseModel.solve();
         recourseModel.exportModel();
         IloNum actualMILP = IloSum(xVals) + recourseModel.getObjVal();

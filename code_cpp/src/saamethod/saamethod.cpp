@@ -11,7 +11,7 @@ SAAMethod::SAAMethod(IloEnv env, ModelParameters params, IloBool integer)
 	d_params(params),
 	d_xVals(IloNumArray{env, params.nbORs}),
 	d_yVals(IloNumArray2{env, params.nbORs}),
-	d_lVal(0),
+	d_lambdaVals(IloNumArray{env, 3*params.nbSurgeries}),
 	d_oVals(IloNumArray2{env, params.nbScenarios}),
 	d_uPlusVals(IloNumArray{env, params.nbScenarios}),
 	d_uMinusVals(IloNumArray{env, params.nbScenarios}),

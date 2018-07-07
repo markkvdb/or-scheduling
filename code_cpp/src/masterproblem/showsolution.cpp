@@ -33,6 +33,10 @@ void MasterProblem::showSolution()
 		}
 		d_env.out() << '\n';
 	}
-    d_env.out() << "lambda = " << d_lVal << '\n';
+
+    // Show lambda info
+    for (IloInt x = 0; x != (3 * d_params.nbSurgeries); ++x)
+        d_env.out() << "lambda" << x << " = " << d_lambdaVals[x] << '\n';
+    
     d_env.out() << "---- END MASTER INFORMATION ----\n\n";
 }

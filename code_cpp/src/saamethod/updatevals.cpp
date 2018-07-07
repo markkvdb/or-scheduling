@@ -6,7 +6,7 @@ void SAAMethod::updateVals()
     d_cplex.getValues(d_xVals, d_x);
     for (IloInt OR = 0; OR < d_params.nbORs; ++OR)
     	d_cplex.getValues(d_yVals[OR], d_y[OR]);
-    d_lVal = d_cplex.getValue(d_l);
+    d_cplex.getValues(d_lambdaVals , d_lambdas);
 
     // Update second-stage variable values
     for (IloInt scen = 0; scen < d_params.nbScenarios; ++scen)

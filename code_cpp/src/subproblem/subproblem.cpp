@@ -23,7 +23,7 @@ SubProblem::SubProblem(IloEnv env, IloNumArray durations, ModelParameters params
  */
 
 SubProblem::SubProblem(IloEnv env, IloNumArray durations, ModelParameters params, IloBool integer,
-					   IloNumArray xVals, IloNumArray2 yVals, IloNum lVal)
+					   IloNumArray xVals, IloNumArray2 yVals, IloNumArray lambdaVals)
 :
 	d_env(env),
 	d_model(IloModel{env}),
@@ -34,7 +34,7 @@ SubProblem::SubProblem(IloEnv env, IloNumArray durations, ModelParameters params
 	d_params(params)
 {
 	initialise();
-	updateModel(xVals, yVals, lVal);
+	updateModel(xVals, yVals, lambdaVals);
 }
 
 SubProblem::SubProblem()

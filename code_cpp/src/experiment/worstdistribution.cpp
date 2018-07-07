@@ -10,17 +10,26 @@ void Experiment::worstDistribution(IloNumArray2 durationSample)
     // Obtain first-stage variable values
     IloNumArray xVals = d_SAAMethod.getXVals();
     IloNumArray2 yVals = d_SAAMethod.getYVals();
-    IloNum lVal = d_SAAMethod.getLVal();
+    IloNumArray lambdaVals = d_SAAMethod.getLVals();
 
     // Solve each subproblem and store objective value
-    vector<IloNum> objValues;
+    IloNumArray objValues_MILP{d_env, d_params.nbScenarios};
+    IloNumArray objValues_approx{d_env, d_params.nbScenarios};
 
     for (IloInt scen = 0; scen != d_params.nbScenarios; ++scen)
     {
-        SubProblem subProblem{d_env, durationSample[scen], d_params, IloTrue, xVals, yVals, lVal};
+        // Obtain value of MILP
+        SubProblem subProblem{d_env, durationSample[scen], d_params, IloTrue, xVals, yVals, lambdaVals};
         subProblem.solve();
-        objValues.push_back(subProblem.getObjectiveVal());
+        objValues_MILP[scen] = subProblem.getObjectiveVal();
+
+        // Obtain value of convex approximation
+        SubProblem subProblem2{d_env, durationSample[scen], d_params, IloFalse, xVals, yVals, lambdaVals};
+        subProblem2.solve();
+        objValues_approx[scen] = subProblem2.getObjectiveVal();
     }
 
-    // Solve the 
+    // Find the worst-case distribution
+    worstDistributionLP(objValues_MILP, "MILP");
+    worstDistributionLP(objValues_approx, "Approx");
 }

@@ -20,7 +20,12 @@ string Experiment::createExperimentHeader()
 		for (IloInt surgery = 0; surgery < d_params.nbSurgeries; ++surgery)
 			oss << "y_" << to_string(surgery+1) << "_" << to_string(OR+1) << ' ';
 
-	oss << "lambda ";
+	for (IloInt surgery = 0; surgery != d_params.nbSurgeries; ++surgery)
+		oss << "lambda_const_" << to_string(surgery+1) << ' ';
+	for (IloInt surgery = 0; surgery != d_params.nbSurgeries; ++surgery)
+		oss << "lambda_mean_" << to_string(surgery+1) << ' ';
+	for (IloInt surgery = 0; surgery != d_params.nbSurgeries; ++surgery)
+		oss << "lambda_second_" << to_string(surgery+1) << ' ';
 
 		// Second-stage costs
 	for (IloInt scen = 0; scen < d_params.nbScenarios; ++scen)

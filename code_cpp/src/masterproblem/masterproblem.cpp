@@ -12,11 +12,12 @@ MasterProblem::MasterProblem(IloEnv env, ModelParameters params)
 	IloInt d_nbSurgeries = d_params.nbSurgeries;
 
 	// Initialise a vector containing all first-stage variables (excluding eta)
-	d_allX = IloNumVarArray{d_env, d_nbORs + d_nbORs * d_nbSurgeries + 1};
-	d_allXVals = IloNumArray{d_env, d_nbORs + d_nbORs * d_nbSurgeries + 1};
+	d_allX = IloNumVarArray{d_env, d_nbORs + d_nbORs * d_nbSurgeries + 3 * d_nbSurgeries};
+	d_allXVals = IloNumArray{d_env, d_nbORs + d_nbORs * d_nbSurgeries + 3 * d_nbSurgeries};
 
 	d_xVals = IloNumArray{d_env, d_nbORs};
 	d_yVals = IloNumArray2{d_env, d_nbORs};
 	for (IloInt OR = 0; OR < d_params.nbORs; ++OR)
     	d_yVals[OR] = IloNumArray{d_env, d_nbSurgeries};
+	d_lambdaVals = IloNumArray{d_env, 3*d_nbSurgeries};
 }

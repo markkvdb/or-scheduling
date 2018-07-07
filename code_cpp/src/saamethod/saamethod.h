@@ -27,14 +27,14 @@ class SAAMethod
    // Variables of the model
    IloNumVarArray    d_x;
    IloNumVarMatrix   d_y;
-   IloNumVar         d_l;
+   IloNumVarArray    d_lambdas;
    IloNumVarMatrix   d_o;
    IloNumVarArray    d_uPlus;
    IloNumVarArray    d_uMinus;
 
    IloNumArray    d_xVals;
    IloNumArray2   d_yVals;
-   IloNum         d_lVal;
+   IloNumArray    d_lambdaVals;
    IloNumArray2   d_oVals;
    IloNumArray    d_uPlusVals;
    IloNumArray    d_uMinusVals;
@@ -56,10 +56,12 @@ public:
    void     showSample();
    void     exportModel();
 
+   IloArray<IloExpr> createLambdaConstraint();
+
    IloNum         getObjectiveVal();
    IloNumArray    getXVals();
    IloNumArray2   getYVals();
-   IloNum         getLVal();
+   IloNumArray    getLVals();
    IloNumArray2   getDurationSample();
 
    std::string showSolutionInfo();
@@ -101,9 +103,9 @@ inline IloNumArray2 SAAMethod::getYVals()
       return d_yVals;
 }
 
-inline IloNum SAAMethod::getLVal()
+inline IloNumArray SAAMethod::getLVals()
 {
-      return d_lVal;
+      return d_lambdaVals;
 }
 
 inline void SAAMethod::exportModel()

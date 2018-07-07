@@ -28,11 +28,14 @@ void MasterProblem::createFirstStageVariables()
    }
 
    // Set up lambda variable
-   d_l = IloNumVar(d_env, 0, IloInfinity);
-   d_allX[d_nbORs + d_nbORs * d_nbSurgeries] = d_l;
+   d_lambdas = IloNumVarArray(d_env, 3*d_nbSurgeries, 0, IloInfinity);
+   for (IloInt surgery = 0; surgery != (3 * d_nbSurgeries); ++surgery)
+   {
+      d_allX[d_nbORs + d_nbORs * d_nbSurgeries + surgery] = d_lambdas[surgery];
 
-   // To ensure that the variable is included in the model.
-   d_model.add(d_l >= 0);
+      // To ensure that the variable is included in the model.
+      d_model.add(d_lambdas[surgery] >= 0);
+   }
 
    // Add eta
    d_eta = IloNumVar(d_env, 0, IloInfinity);
@@ -54,6 +57,13 @@ void MasterProblem::createFirstStageVariables()
          oss.str("");
       }
    }
-   d_l.setName("l");
+   for (IloInt moment = 0; moment != 3; ++moment)
+   {
+      for (IloInt surgery = 0; surgery != d_nbSurgeries; ++surgery)
+      {
+          string const name = string("l") + to_string(moment) + to_string(surgery);
+          d_lambdas[moment * d_nbSurgeries + surgery].setName(name.c_str());
+      }
+   }
    d_eta.setName("eta");
 } // END createFirstStageVariables

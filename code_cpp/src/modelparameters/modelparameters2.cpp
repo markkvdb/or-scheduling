@@ -44,7 +44,4 @@ ModelParameters::ModelParameters(string parametersInput)
 	nbScenarios 	= stoi(subs);
 	iss >> subs;
 	seed 			= stoi(subs);
-
-	cout << parametersInput << '\n';
-	cout << nbORs << ' ' << nbSurgeries << ' ' << cf << ' ' << cv << ' ' << nbHours << ' ' << meanDuration << ' ' << stdDuration << ' ' << eps1 << ' ' << eps2 << ' ' << nbScenarios << ' ' << seed << '\n';
 }

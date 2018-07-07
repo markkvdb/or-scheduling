@@ -19,42 +19,29 @@ string SAAMethod::showSolutionInfo()
  	- Second-stage costs
  	- Cuts added
 	*/
-    IloNumArray xVals(d_env);
-    d_cplex.getValues(xVals, d_x);
 	for (IloInt OR = 0; OR < d_params.nbORs; ++OR)
-		oss << xVals[OR] << ' ';
+		oss << d_xVals[OR] << ' ';
 
-	IloNumArray2 yVals(d_env, d_params.nbORs);
 	for (IloInt OR = 0; OR < d_params.nbORs; ++OR)
-	{
-		IloNumArray yValsTemp(d_env);
-    	d_cplex.getValues(yValsTemp, d_y[OR]);
-    	yVals[OR] = yValsTemp;
 		for (IloInt surgery = 0; surgery < d_params.nbSurgeries; ++surgery)
-			oss << yVals[OR][surgery] << ' ';
-	}
+			oss << d_yVals[OR][surgery] << ' ';
 
-	IloNum lVal = d_cplex.getValue(d_l);
-	oss << lVal << ' ';
+	for (IloInt surgery = 0; surgery != (3 * d_params.nbSurgeries); ++surgery)
+		oss << d_lambdaVals[surgery] << ' ';
 
 	// Second-stage costs
 	for (IloInt scen = 0; scen < d_params.nbScenarios; ++scen)
 	{
-		IloNumArray oVals(d_env);
-		d_cplex.getValues(oVals, d_o[scen]);
-		IloNum uPlus = d_cplex.getValue(d_uPlus[scen]);
-		IloNum uMinus = d_cplex.getValue(d_uMinus[scen]);
-
 		for (IloInt OR = 0; OR < d_params.nbORs; ++OR)
-			oss << oVals[OR] << ' ';
-		oss << uPlus << ' ' << uMinus << ' ';
+			oss << d_oVals[scen][OR] << ' ';
+		oss << d_uPlus[scen] << ' ' << d_uMinus[scen] << ' ';
 	}
 
 	// First-stage cost is just the sum of all the x vals.
-	oss << IloSum(xVals) << ' ';
+	oss << IloSum(d_xVals) << ' ';
 
 	// Second-stage costs can be found by solving the real MILP for many scenarios, e.g,
-	RecourseModel recourseCosts(d_env, d_params, IloTrue, 1000, xVals, yVals, lVal);
+	RecourseModel recourseCosts(d_env, d_params, IloTrue, 1000, d_xVals, d_yVals, d_lambdaVals);
 	recourseCosts.solve();
 	IloNum secondStageCosts = recourseCosts.getObjVal();
 	oss << secondStageCosts << ' ';

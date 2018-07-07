@@ -32,21 +32,23 @@ class SubProblem
 	IloNumArray				d_durations;
 	IloNumArray 			d_xVals;
 	IloNumArray2			d_yVals;
-	IloNum 					d_lVal;
+	IloNumArray 			d_lambdaVals;
 	ModelParameters const	d_params;
 
 public:
 	SubProblem();
 	SubProblem(IloEnv env, IloNumArray durations, ModelParameters params, IloBool integer);
 	SubProblem(IloEnv env, IloNumArray durations, ModelParameters params, IloBool integer, 
-			   IloNumArray xVals, IloNumArray2 yVals, IloNum lVal);
+			   IloNumArray xVals, IloNumArray2 yVals, IloNumArray lambdaVals);
 
 	void 		initialise();
 	void 		solve();
-	void 		updateModel(IloNumArray xVals, IloNumArray2 yVals, IloNum lVal);
+	void 		updateModel(IloNumArray xVals, IloNumArray2 yVals, IloNumArray lambdaVals);
 	IloNumArray getDualVariables();
 	void		showSolution();
 	void		outputModel();
+
+	IloInt 		createLambdaConstraint();
 
 	IloModel 	getModel();
 	IloNum 		getObjectiveVal();
